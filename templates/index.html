@@ -1,0 +1,95 @@
+<!-- print(Year,Present_Price,Kms_Driven,Fuel_Type,Seller_Type,Transmission,Owner) -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Car Price Prediction</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="card" style="width: 100%; height: 100; margin-top: 50px;">
+                <div class="card-header" style="text-align: center;">
+                    <h1>Welcome To Car Price Predictor</h1>
+                </div>
+                <div class="card-body">
+                    <form method="POST" accept-charset="utf-8">
+                        <div class="row">
+                            <div class="col-md-6 form-group" style="text-align: center;">
+                                <label><b>Select Year</b></label>
+                                
+                                <input type="year" id="Year" name="Year">
+                                
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align: center;">
+                                <label><b>Present_Price</b></label>
+                                <input type="text" class="form-control" name="Present_Price" id="Present_Price" placeholder="Enter Present_Price">
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align: center;">
+                                <label><b>Enter Kms_Driven</b></label>
+                                <input type="text" class="form-control" name="Kms_Driven" id="Kms_Driven" placeholder="Kms_Driven">
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align: center;">
+                                <label><b>Enter Fuel_Type</b></label>
+                                <input type="text" class="form-control" name="Fuel_Type" id="Fuel_Type" placeholder="Enter Fuel_Type">
+                            </div>
+
+                            <div class="col-md-6 form-group" style="text-align: center;">
+                                <label><b>Enter Seller_Type</b></label>
+                                <input type="text" class="form-control" name="Seller_Type" id="Seller_Type" placeholder="Enter Seller_Type">
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align: center;">
+                                <label><b>Enter Transmission</b></label>
+                                <input type="text" class="form-control" name="Transmission" id="Transmission" placeholder="Enter Transmission">
+                            </div>
+                            <div class="col-md-6 form-group" style="text-align: center;">
+                                <label><b>Enter Owner</b></label>
+                                <input type="text" class="form-control" name="Owner" id="Owner" placeholder="Enter Owner">
+                            </div>
+                            <div class="col-md-12 form-group" style="text-align: center;">
+                                <br>
+                                <button class="btn btn-primary form-control" onclick="send_data()">Predict price</button>
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="col-md-12" style="text-align: center;">
+                        <h3><span id="prediction"></span></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function form_handler(event) {
+            event.preventDefault();
+        }
+
+        function send_data() {
+            document.querySelector('form').addEventListener('submit', form_handler);
+            var fd = new FormData(document.querySelector('form'));
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/predict', true);
+            document.getElementById('prediction').innerHTML = "Wait predicting price...";
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    document.getElementById('prediction').innerHTML = "Prediction: Rs." + xhr.responseText;
+                }
+            };
+            xhr.onload = function () {
+                // Additional handling after the request completes (optional)
+            };
+            xhr.send(fd);
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+</body>
+</html>
